@@ -1,0 +1,45 @@
+base:
+    build: base
+
+redis:
+    build: redis
+    ports:
+        - "6379:6379"
+    environment:
+        - REDIS_PASSWORD
+    volumes_from:
+        - dataredis
+
+dataredis:
+    image: busybox
+    volumes:
+        - /var/lib/redis
+
+elasticsearch:
+    build: elasticsearch
+    environment:
+        - ELASTICSEARCH_PLUGINS
+    volumes_from:
+        - dataelasticsearch
+
+dataelasticsearch:
+    image: busybox
+    volumes:
+        - /usr/share/elasticsearch/data
+
+logstash:
+    build: logstash
+    environment:
+        - REDIS_PASSWORD
+    links:
+        - redis
+        - elasticsearch
+
+kibana:
+    build: kibana
+    ports:
+        - "80:80"
+    environment:
+        - KIBANA_HTACCESS
+    links:
+        - elasticsearch
