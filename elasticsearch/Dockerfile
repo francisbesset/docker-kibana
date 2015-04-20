@@ -2,7 +2,7 @@ FROM kibana_base
 
 
 # install ca-certificates and wget
-RUN apt-get install -y ca-certificates wget
+RUN apt-get install -y wget
 
 
 # Java
@@ -11,7 +11,7 @@ RUN apt-get install -y openjdk-7-jre-headless
 
 # Elasticsearch
 RUN \
-        wget -qO - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - && \
+        wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - && \
     echo "deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main" >> /etc/apt/sources.list.d/elasticsearch.list && \
     apt-get update && \
     apt-get install -y elasticsearch

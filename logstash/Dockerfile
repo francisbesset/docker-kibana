@@ -2,7 +2,7 @@ FROM kibana_base
 
 
 # To download Elasticsearch GPG Key
-RUN apt-get install -y ca-certificates wget
+RUN apt-get install -y wget
 
 
 # Logstash dependency
@@ -10,7 +10,7 @@ RUN apt-get install -y openjdk-7-jre-headless
 
 # Logstash
 RUN \
-        wget -qO - https://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - && \
+        wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | apt-key add - && \
     echo "deb http://packages.elasticsearch.org/logstash/1.4/debian stable main" > /etc/apt/sources.list.d/logstash.list && \
     apt-get update && \
     apt-get install -y logstash
