@@ -7,20 +7,17 @@ redis:
         - ./data/redis:/data
     command: redis-server /usr/local/etc/redis/redis.conf
 
-base:
-    build: base
-
 elasticsearch:
     build: elasticsearch
-    environment:
-        - ELASTICSEARCH_PLUGINS
-    volumes_from:
-        - dataelasticsearch
-
-dataelasticsearch:
-    image: busybox
     volumes:
-        - /usr/share/elasticsearch/data
+        - ./data/elasticsearch:/usr/share/elasticsearch/data
+    command: elasticsearch
+        -Des.node.name="Grumpy Cat"
+        -Des.cluster.name="kibana"
+        -Des.index.number_of_replicas=0
+
+base:
+    build: base
 
 logstash:
     build: logstash
