@@ -26,14 +26,9 @@ logstash:
     command: logstash
         -f /usr/local/etc/logstash/logstash.conf
 
-base:
-    build: base
-
 kibana:
-    build: kibana
+    image: kibana:4.3
     ports:
-        - "80:80"
-    environment:
-        - KIBANA_HTACCESS
+        - "5601:5601"
     links:
         - elasticsearch
