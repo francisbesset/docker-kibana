@@ -27,7 +27,7 @@ logstash:
         -f /usr/local/etc/logstash/logstash.conf
 
 kibana:
-    image: kibana:4.3
+    build: kibana
     ports:
         - "5601:5601"
     links:
