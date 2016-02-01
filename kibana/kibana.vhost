@@ -1,0 +1,23 @@
+server {
+    listen 80;
+
+    location / {
+        root /opt/kibana;
+    }
+
+    location ~ ^/logstash-[^/]+/_search$ {
+        proxy_pass ${ELASTICSEARCH_1_PORT};
+    }
+
+    location ~ ^(/logstash-[^/]+)?/_(aliases|mapping|nodes)$ {
+        limit_except GET {
+            deny all;
+        }
+
+        proxy_pass ${ELASTICSEARCH_1_PORT};
+    }
+
+    location /kibana-int/dashboard/ {
+        proxy_pass ${ELASTICSEARCH_1_PORT};
+    }
+}
